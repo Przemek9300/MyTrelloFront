@@ -2,32 +2,32 @@
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { SettingsService } from '../utils/settings.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-   httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'my-auth-token'
-    })
-  };
+
+
+  
+  static auth:boolean;
 
   constructor(private http: HttpClient) { }
 
 
 
-
     login(email: string, password: string) {
-      return this.http.post<any>('http://localhost:28326/api/account/login', { Email: email, Password: password })
+      return this.http.post<any>(SettingsService.LOGIN_END_POINT, { Email: email, Password: password })
           .pipe(map((res:any) => {
 
 
               // login successful if there's a jwt token in the response
               if (res && res.tokenString) {
                   // store username and jwt token in local storage to keep user logged in between page refreshes
-                 localStorage.setItem('access_token',JSON.stringify(res.tokenString));
+                  AuthService.auth = true;
+                  
+                  localStorage.setItem('access_token',JSON.stringify(res.tokenString));
               }
           }));
   }
@@ -65,6 +65,7 @@ export class AuthService {
   }
 
   public get loggedIn(): boolean {
+    AuthService.auth = false;
     return (localStorage.getItem('access_token') !== null);
   }
 }
