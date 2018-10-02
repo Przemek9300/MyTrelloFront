@@ -26,7 +26,10 @@
     "bootstrap": "^4.0.0",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
-    "rxjs": "^6.0.0",
+    "install": "^0.12.1",
+    "npm": "^6.4.1",
+    "rxjs": "^6.3.2",
+    "rxjs-compat": "^6.3.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

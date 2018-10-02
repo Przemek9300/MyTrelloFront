@@ -11,12 +11,18 @@ import { User } from '../shared/models/user';
  
 export class HomeComponent implements OnInit {
 
-  user:User;
+  public user:User;
   constructor(private http: HttpClient,private service:ApiService) { }
 
   ngOnInit() {
-    this.user = this.service.getUser()
-    console.log(this.user);
+   this.service.getUser() .subscribe((response:User) => {
+      this.user = response;
+    });
+    console.log(this.user)
+    
   }
+
+
+  
 
 }
